@@ -1,4 +1,5 @@
 # Family-Tree
 
 A family tree
-Trevor Levins and Eriki Bowers
+
+Trevor Levins and Erik Bowers
