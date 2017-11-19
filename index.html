@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="treant-js-master/Treant.css" type="text/css"/>
+    <link rel="stylesheet" href="treecss.css" type="text/css"/>
+    
+</head>
+<body>
+    
+    <!-- Tabs on top: -->
+    <div class="tab">
+      <button class="tablinks" onclick="viewAccountPage()">My account</button>
+      <button class="tablinks" onclick="toggleMode()">Toggle edit mode</button>
+      <button class="tablinks" onclick="exitAccount()">Log out</button>
+    </div>
+    
+    <!-- Tree -->
+    <div id="tree-simple" class="base"></div>
+    
+    <!-- Buttons -->
+    <div id="center">
+        <button onclick="add()">Add a member</button>
+        <button onclick="remove()">Remove a member</button>
+    </div>
+    <div id="center">
+        <button onclick="nextTree()">Next tree --></button>
+    </div>
+    
+    <!-- javascript -->
+    <script src="treant-js-master/vendor/raphael.js"></script>
+    <script src="treant-js-master/Treant.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="javascript.js"></script>
+</body>
+</html>
