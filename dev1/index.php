@@ -1,5 +1,4 @@
 <?php
-
 require ('db_credentials.php');
 
 
@@ -49,4 +48,10 @@ function display_child_nodes($parent_id, $level)
 echo '<ul>';
 display_child_nodes(NULL, 0);
 echo '</ul>';
+
+
+
+
+
+
 ?>
