@@ -20,9 +20,30 @@
     <!-- Tree -->
     <div id="tree-simple" class="base"></div>
     
+    <!-- Modal for adding to tree -->
+    <div id="modal" class="modal">
+    
+        <div class="modal-content" id="modal-content">
+            <span class="close">&times;</span>
+            <!-- -->
+            <div id="leftalign">
+                Full name: <input type="text" id="fullname" placeholder="Trevor">
+                <br>
+                <select name="cars">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="fiat">Fiat</option>
+                    <option value="audi">Audi</option>
+                </select>
+            </div>
+-->
+        </div>
+        
+    </div>
+    
     <!-- Buttons -->
     <div id="center">
-        <button onclick="add()">Add a member</button>
+        <button onclick="add()" id="addbutton">Add a member</button>
         <button onclick="remove()">Remove a member</button>
     </div>
     <div id="center">
