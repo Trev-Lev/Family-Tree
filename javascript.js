@@ -1,3 +1,6 @@
+
+/* Not all functions are finished yet - 11/27/2017 base modal is up but only for show so far */
+
 var simple_chart_config = {
     chart: {
         container: "#tree-simple",
@@ -181,7 +184,8 @@ btn.onclick = function() {
     for (i = 0; i < parents.length; i++) {
         contentHTML += "<option value='" + parents[i] + "'>" + parents[i] + "</option> ";
     }
-    //<option value='audi'>Audi</option>
+    
+    // Close HTML elements
     contentHTML += "</select> </div>";
     
     // Modify inner html
