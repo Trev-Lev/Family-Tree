@@ -1,6 +1,3 @@
-
-/* Not all functions are finished yet - 11/27/2017 base modal is up but only for show so far */
-
 var simple_chart_config = {
     chart: {
         container: "#tree-simple",
@@ -168,14 +165,17 @@ function remove() {
 
 /* Modal for adding new nodes */
 var modal = document.getElementById('modal');
-var btn = document.getElementById("addbutton");
+var addbtn = document.getElementById("addbutton");
 var span = document.getElementsByClassName("close")[0];
 var content = document.getElementById('modal-content'); 
 
-btn.onclick = function() {
+addbtn.onclick = function() {
+    
+    // Make modal visible 
     modal.style.display = "block";
     
-    var contentHTML = "<span class='close'>&times;</span> <div id='leftalign'> Full name: <input type='text'id='fullname' placeholder='Trevor'> <br> Child of: <select name='cars'>";
+    // Begin inner html string
+    var contentHTML = "<div class='modal-edge'>Add a node</div> <span class='close'>&times;</span> <div id='addform'> Full name: <input type='text'id='fullname' placeholder='Trevor'> <br> <form action='addnode.php'> Child of: <select name='cars'>";
     
     // Perform search to find all names in the tree
     var parents = getParents();
@@ -184,9 +184,9 @@ btn.onclick = function() {
     for (i = 0; i < parents.length; i++) {
         contentHTML += "<option value='" + parents[i] + "'>" + parents[i] + "</option> ";
     }
-    
-    // Close HTML elements
-    contentHTML += "</select> </div>";
+
+    // Add button to finalize addition of node to tree
+    contentHTML += "</select> <br> <input type='submit' value='Add to tree!'> </form> </div>";
     
     // Modify inner html
     content.innerHTML = contentHTML;
