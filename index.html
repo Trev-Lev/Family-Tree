@@ -21,9 +21,9 @@
     <div id="tree-simple" class="base"></div>
     
     <!-- Modal for adding to tree -->
-    <div id="modal" class="modal">
+    <div id="addmodal" class="addmodal">
     
-        <div class="modal-content" id="modal-content">
+        <div class="modal-content-add" id="modal-content-add">
             <!--
             <span class="close">&times;</span>
              
@@ -42,10 +42,14 @@
         
     </div>
     
+    <div id="removemodal" class="removemodal">
+        <div class="modal-content-remove" id="modal-content-remove"></div>
+    </div>
+    
     <!-- Buttons -->
     <div id="center">
         <button onclick="add()" id="addbutton">Add a member</button>
-        <button onclick="remove()">Remove a member</button>
+        <button onclick="remove()" id="removebutton">Remove a member</button>
     </div>
     <div id="center">
         <button onclick="nextTree()">Next tree --></button>

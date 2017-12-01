@@ -136,6 +136,18 @@ function getParents() {
     return quotedNames; // Finished product
 }
 
+// Returns a list of names of all nodes that do NOT have children
+function getChildren() {
+    
+    // Create list to return
+    var quotedNames = [];
+    
+    // Begin arduous task of getting nodes...
+    var result = JSON.stringify(simple_chart_config.nodeStructure);
+    var list = result.split('"name":')
+    console.log(list);
+}
+
 var tree = new Treant(simple_chart_config);
     
 var count = 1;
@@ -164,18 +176,54 @@ function remove() {
 }
 
 /* Modal for adding new nodes */
-var modal = document.getElementById('modal');
+var addmodal = document.getElementById('addmodal');
 var addbtn = document.getElementById("addbutton");
-var span = document.getElementsByClassName("close")[0];
-var content = document.getElementById('modal-content'); 
+var addspan = document.getElementsByClassName("addclose")[0];
+var addcontent = document.getElementById('modal-content-add'); 
+
+var removemodal = document.getElementById('removemodal');
+var removebtn = document.getElementById('removebutton');
+var removespan = document.getElementsByClassName('removeclose')[0];
+var removecontent = document.getElementById('modal-content-remove');
+
+removebtn.onclick = function() {
+    
+    removemodal.style.display = "block";
+    
+    // Begin inner html string
+    var contentHTML = "<div class='modal-edge-remove'>Remove a node</div> <span class='removeclose'>&times;</span> <div id='addform'> Child to remove: <form action='removenode.php> Remove child: <select name='children'>";
+    
+    /*
+    var children = getChildren();
+    
+    for (i = 0; i < children.length; i++) {
+        contentHTML += "<option value='" + children[i] +"'>" + children[i] + "</option> ";
+    }*/
+    removecontent.innerHTML = contentHTML;
+    
+    removespan = document.getElementsByClassName("removeclose")[0];
+    removespan.onclick = function() {
+        removemodal.style.display = "none";
+    }
+    
+}
+
+    // Create list to return
+    var quotedNames = [];
+    
+    // Begin arduous task of getting nodes...
+    var result = JSON.stringify(simple_chart_config.nodeStructure);
+    var list = result.split('[')
+    console.log(result);
+    console.log(list);
 
 addbtn.onclick = function() {
     
     // Make modal visible 
-    modal.style.display = "block";
+    addmodal.style.display = "block";
     
     // Begin inner html string
-    var contentHTML = "<div class='modal-edge'>Add a node</div> <span class='close'>&times;</span> <div id='addform'> Full name: <input type='text'id='fullname' placeholder='Trevor'> <br> <form action='addnode.php'> Child of: <select name='cars'>";
+    var contentHTML = "<div class='modal-edge-add'>Add a node</div> <span class='addclose'>&times;</span> <div id='addform'> Full name: <input type='text'id='fullname' placeholder='Trevor'> <br> <form action='addnode.php'> Child of: <select name='parents'>";
     
     // Perform search to find all names in the tree
     var parents = getParents();
@@ -189,23 +237,20 @@ addbtn.onclick = function() {
     contentHTML += "</select> <br> <input type='submit' value='Add to tree!'> </form> </div>";
     
     // Modify inner html
-    content.innerHTML = contentHTML;
+    addcontent.innerHTML = contentHTML;
     
     // Make X button work again
-    span = document.getElementsByClassName("close")[0];
-    span.onclick = function() {
-        modal.style.display = "none";
+    addspan = document.getElementsByClassName("addclose")[0];
+    addspan.onclick = function() {
+        addmodal.style.display = "none";
     }
 }
 
-/*
-span.onclick = function() {
-    modal.style.display = "none";
-}
-*/
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target == addmodal) {
+        addmodal.style.display = "none";
+    } else if (event.target == removemodal) {
+        removemodal.style.display = "none";
     }
 }
 
