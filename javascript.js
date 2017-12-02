@@ -1,13 +1,18 @@
+/* 
+
+    MODALS LOOKS WEIRD! MAYBE RESIZE THEM? I DONT KNOW
+
+*/
+
 var simple_chart_config = {
     chart: {
         container: "#tree-simple",
         connectors: {
-            type: "step"
+            type: "step"    // Probably the best connector for a family tree structure
         },
         
         node: {
             collapsable: true,
-            //HTMLclass: (inEditMode ? "editable" : "normal")
         },
         
         animation: {
@@ -20,104 +25,55 @@ var simple_chart_config = {
     
     nodeStructure: {
         
-        text: { name: "Parent node" }, // comma here
+        text: { name: "Parent node",
+                title: "February 25th, 1997"
+              }, 
         HTMLclass: "blue",
         
-          // here
+        // To test how the tree works with only one node (initial state), comment out like below:
+        // /*
         children: [
             {   
-                text: { name: "First child" },
+                text: { name: "First child",
+                        title: "June 18th, 2017"
+                      },
                 HTMLclass: "white"
             },
             {
-                text: { name: "Another child"},
+                text: { name: "Another child",
+                        title: "July 19th, 1997"
+                      },
                 HTMLclass: "white"
             },
             {
-                text: { name: "Trevor"},
+                text: { name: "Trevor",
+                        title: "In the near future"
+                      },
                 HTMLclass: "white",
                 children: [
                     {
-                        text: { name: "John"},
+                        text: { name: "John",
+                                title: "December 25th, 2017"
+                              },
                         HTMLclass: "blue"
                     },
                     {
-                        text: { name: "Jay"},
+                        text: { name: "Jay",
+                                title: "January 1st, 2017"
+                              },
                         HTMLclass: "blue"
                     }
                 ]
             }
         ]
-         // here
+         // */
     }
 };
 
-// WILL BE REMOVED
-var inEditMode = false;
-
-// WILL PROBABLY BE REMOVED
-function viewAccountPage() {
-    console.log("view account button was pressed!")
-}
-
-// WILL BE REMOVED
-function toggleMode() {
-    
-    // Toggle the variable
-    inEditMode = !inEditMode;
-    
-    console.log("toggle mode button was pressed!")
-    editMode(inEditMode);
-    
-
-    
-    // Display the same tree without editable features
-
-}
-
-// WILL BE REMOVED
-function editMode(inEditMode) {
-    // Display the same tree but with editable features
-    if (inEditMode) {
-        for (i = 0; i < simple_chart_config.nodeStructure.children.length; i++) {
-            var editString = "<input type='text' name='name' placeholder='";
-            editString += simple_chart_config.nodeStructure.children[i].text.name;
-            editString += "' id='treantinputbox";
-            editString += i;
-            editString += "'>";
-            simple_chart_config.nodeStructure.children[i].innerHTML = editString; 
-        }
-        redraw();
-    } else {    // Switched out of edit mode
-        for (i = 0; i < simple_chart_config.nodeStructure.children.length; i++) {
-        
-            var value; 
-            
-            if (document.getElementById("treantinputbox"+i).value != '') {
-                value = document.getElementById("treantinputbox" + i).value;
-                simple_chart_config.nodeStructure.children[i].text.name = value;   
-            }
-            
-            /*
-            if(simple_chart_config.nodeStructure.children[i].innerHTML.text != null) {
-                value = simple_chart_config.nodeStructure.children[i].innerHTML.value;
-                simple_chart_config.nodeStructure.children[i].text.name = value;
-            }
-            */
-            
-            simple_chart_config.nodeStructure.children[i].innerHTML = "";
-        }
-        redraw();
-    }
-}
-
-// TO BE CHANGED
-function exitAccount() {
-    console.log("exit account button was pressed!")
-}
-
 // Returns a list of the names of all the nodes, as all are eligible to be parents 
-// Maybe modify to get entire node?
+// In the nested for loop, modify to check for end of name field if additional fields are added.
+// The same applies for the getChildren() function.
+// Though I think checking if the character is not a , or } tag fulfills this entirely
 function getParents() {
     
     // Create list to return
@@ -133,7 +89,7 @@ function getParents() {
     // Now, parse until '}' is found - "" gets ignored
     for (i = 0; i < list.length; i++) {
         var stringToAdd = "";
-        for (j = 0; list[i][j] != '}'; j++) {
+        for (j = 0; list[i][j] != '}' && list[i][j] != ","; j++) {
             if (list[i][j] != '"') stringToAdd += list[i][j];
         }
         quotedNames.push(stringToAdd);
@@ -144,11 +100,21 @@ function getParents() {
 // Returns a list of names of all nodes that do NOT have children (leaf nodes)
 function getChildren() {
     
+    // Create a deep copy. This is necessary or else everything is modified.
+    var deepcopy = jQuery.extend(true, {}, simple_chart_config.nodeStructure);
+    
     // Create list to return
     var quotedNames = [];
-    var currentNode = simple_chart_config.nodeStructure;
-    var stack = (currentNode.children != null ? currentNode.children : []);
-
+    var currentNode = deepcopy;
+    if (currentNode.children == null) {
+        // If there is nothing to remove, return the empty set.
+        // The function will alert the user that there are no nodes to remove.
+        return quotedNames;
+    }
+    
+    // If program reaches this point, the base level node has children and this is safe
+    var stack = currentNode.children;
+    
     // Simple depth-first-search in javascript.
     // I feel like a cool person for doing this
     while(stack.length > 0) {
@@ -176,20 +142,20 @@ function getChildren() {
     // Now, parse until '}' is found - "" gets ignored
     for (i = 0; i < list.length; i++) {
         var stringToAdd = "";
-        for (j = 0; list[i][j] != '}'; j++) {
+        for (j = 0; list[i][j] != '}' && list[i][j] != ","; j++) {
             if (list[i][j] != '"') stringToAdd += list[i][j];
         }
         leafNodes.push(stringToAdd);
     }
 
-    // Returns only the leaf nodes of the tree.
+    // Return only the leaf nodes of the tree.
     return leafNodes;
 }
 
+// Creates the tree!
 var tree = new Treant(simple_chart_config);
     
-var count = 1;
-
+// Don't know if I will use yet to be honest
 function add() {
 
     // Display a modal asking for characteristics
@@ -200,13 +166,12 @@ function add() {
     redraw();
 }
 
+// This function will have some php interaction. It needs to retrieve everything from the database,
+// import it into the JSON object simple_chart_config.nodeStructure, and then
+// redraw the tree: tree = new Treant(simple_chart_config);
 function redraw() {
     tree = "";
     tree = new Treant(simple_chart_config);
-}
-
-function remove() {
-    redraw();
 }
 
 /* Modal for adding new nodes */
@@ -222,29 +187,34 @@ var removecontent = document.getElementById('modal-content-remove');
 
 removebtn.onclick = function() {
     
-    removemodal.style.display = "block";
-    
-    // Begin inner html string
-    var contentHTML = "<div class='modal-edge-remove'>Remove a node</div> <span class='removeclose'>&times;</span> <div id='addform'> <form action='removenode.php> Full name: <input type='text' id='fullname' placeholder='Trevor'> <br> Child to remove: <select name='children'>";
-    
+    // Get names of leaf nodes only
     var children = getChildren();
     
-    for (i = 0; i < children.length; i++) {
-        contentHTML += "<option value='" + children[i] + "'>" + children[i] + "</option> ";
-    }
-    
-    contentHTML += "</select> <br> <input type='submit' value='REMOVE PERSON FROM FAMILY!'> </form> </div>";
-    
-    removecontent.innerHTML = contentHTML;
-    
-    removespan = document.getElementsByClassName("removeclose")[0];
-    removespan.onclick = function() {
+    if (children.length > 0) {
+
+        // Make modal visible
+        removemodal.style.display = "block";
+        
+        // Begin inner html string
+        var contentHTML = "<div class='modal-edge-remove'>Remove a node</div> <span class='removeclose'>&times;</span> <div id='addform'> <form action='removenode.php> <br> Full name: <input type='text' id='fullname' placeholder='Trevor'> <br> Child to remove: <select name='children'>";
+
+        for (i = 0; i < children.length; i++) {
+            contentHTML += "<option value='" + children[i] + "'>" + children[i] + "</option> ";
+        }
+
+        contentHTML += "</select> <br> <input type='submit' value='REMOVE PERSON FROM FAMILY!'> </form> </div>";
+
+        removecontent.innerHTML = contentHTML;
+        
+        removespan = document.getElementsByClassName("removeclose")[0];
+        removespan.onclick = function() {
         removemodal.style.display = "none";
     }
-    
+    } else {
+        // Else, an empty set was returned.
+        alert("Don't do that. You can't remove more people.");
+    }
 }
-
-    
 
 addbtn.onclick = function() {
     
@@ -273,6 +243,14 @@ addbtn.onclick = function() {
     addspan.onclick = function() {
         addmodal.style.display = "none";
     }
+    
+    // To add the content to the tree, it will be inserted into the database here.
+    // Additionally, perform a check here to insert the appropriate HTMLclass field
+    // Do this by finding the HTMLclass field that the parent (name retrievable from select box) and 
+    //  placing the corresponding one in there
+    //  ex: "white" -> children are blue
+    //      "blue"  -> children are white
+    
 }
 
 window.onclick = function(event) {

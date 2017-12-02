@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title></title>
+    <title>Family Tree</title>
     <!-- stylesheets -->
     <link rel="stylesheet" href="treant-js-master/Treant.css" type="text/css"/>
     <link rel="stylesheet" href="treecss.css" type="text/css"/>
@@ -10,45 +10,22 @@
 </head>
 <body>
     
-    <!-- Tabs on top: -->
-    <div class="tab">
-      <button class="tablinks" onclick="viewAccountPage()">My account</button>
-      <button class="tablinks" onclick="toggleMode()">Toggle edit mode</button>
-      <button class="tablinks" onclick="exitAccount()">Log out</button>
-    </div>
-    
     <!-- Tree -->
     <div id="tree-simple" class="base"></div>
     
     <!-- Modal for adding to tree -->
     <div id="addmodal" class="addmodal">
-    
-        <div class="modal-content-add" id="modal-content-add">
-            <!--
-            <span class="close">&times;</span>
-             
-            <div id="leftalign">
-                Full name: <input type="text" id="fullname" placeholder="Trevor">
-                <br>
-                <select name="cars">
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="fiat">Fiat</option>
-                    <option value="audi">Audi</option>
-                </select>
-            </div>
--->
-        </div>
-        
+        <div class="modal-content-add" id="modal-content-add"></div>
     </div>
     
+    <!-- Modal for removing from tree -->
     <div id="removemodal" class="removemodal">
         <div class="modal-content-remove" id="modal-content-remove"></div>
     </div>
     
     <!-- Buttons -->
     <div id="center">
-        <button onclick="add()" id="addbutton">Add a member</button>
+        <button id="addbutton">Add a member</button>
         <button id="removebutton">Remove a member</button>
     </div>
     <div id="center">

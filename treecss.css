@@ -138,6 +138,7 @@ something-blue: #34495e
     padding-left: 1px;
     border-radius: 25%;
     color: #fdfefe;
+    text-align: center;
 }
 
 .Treant .node.white {
@@ -146,6 +147,7 @@ something-blue: #34495e
     padding-right: 2px;
     padding-left: 1px;
     border-radius: 25%;
+    text-align: center;
 }
 
 .Treant .node.collapsed { 
