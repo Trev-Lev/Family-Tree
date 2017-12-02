@@ -7,6 +7,7 @@
 var simple_chart_config = {
     chart: {
         container: "#tree-simple",
+        scrollbar: "fancy",
         connectors: {
             type: "step"    // Probably the best connector for a family tree structure
         },
