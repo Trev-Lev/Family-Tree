@@ -52,12 +52,15 @@ var simple_chart_config = {
     }
 };
 
+// WILL BE REMOVED
 var inEditMode = false;
 
+// WILL PROBABLY BE REMOVED
 function viewAccountPage() {
     console.log("view account button was pressed!")
 }
 
+// WILL BE REMOVED
 function toggleMode() {
     
     // Toggle the variable
@@ -72,7 +75,7 @@ function toggleMode() {
 
 }
 
-// Mode is true/false
+// WILL BE REMOVED
 function editMode(inEditMode) {
     // Display the same tree but with editable features
     if (inEditMode) {
@@ -108,11 +111,13 @@ function editMode(inEditMode) {
     }
 }
 
+// TO BE CHANGED
 function exitAccount() {
     console.log("exit account button was pressed!")
 }
 
 // Returns a list of the names of all the nodes, as all are eligible to be parents 
+// Maybe modify to get entire node?
 function getParents() {
     
     // Create list to return
@@ -136,16 +141,49 @@ function getParents() {
     return quotedNames; // Finished product
 }
 
-// Returns a list of names of all nodes that do NOT have children
+// Returns a list of names of all nodes that do NOT have children (leaf nodes)
 function getChildren() {
     
     // Create list to return
     var quotedNames = [];
+    var currentNode = simple_chart_config.nodeStructure;
+    var stack = (currentNode.children != null ? currentNode.children : []);
+
+    // Simple depth-first-search in javascript.
+    // I feel like a cool person for doing this
+    while(stack.length > 0) {
+        currentNode = stack.pop();
+        if (currentNode.children != null) {
+            stack.push(currentNode.children);
+        } else {  
+            // If the current node has no children, add to the list
+            quotedNames.push(currentNode);
+        }
+    }
     
-    // Begin arduous task of getting nodes...
-    var result = JSON.stringify(simple_chart_config.nodeStructure);
-    var list = result.split('"name":')
-    console.log(list);
+    // Get a long string to parse
+    var asString = JSON.stringify(quotedNames);
+    
+    // Split into an array of strings
+    var list = asString.split('"name":');
+
+    // Remove first element of array
+    list.shift();
+    
+    // Final output array. Just the names.
+    var leafNodes = [];
+
+    // Now, parse until '}' is found - "" gets ignored
+    for (i = 0; i < list.length; i++) {
+        var stringToAdd = "";
+        for (j = 0; list[i][j] != '}'; j++) {
+            if (list[i][j] != '"') stringToAdd += list[i][j];
+        }
+        leafNodes.push(stringToAdd);
+    }
+
+    // Returns only the leaf nodes of the tree.
+    return leafNodes;
 }
 
 var tree = new Treant(simple_chart_config);
@@ -168,11 +206,7 @@ function redraw() {
 }
 
 function remove() {
-    var index = simple_chart_config.nodeStructure.children.length - 1;
-    simple_chart_config.nodeStructure.children.splice(index, 1);
     redraw();
-    count--;
-    if (count < 0) count = 0;
 }
 
 /* Modal for adding new nodes */
@@ -191,14 +225,16 @@ removebtn.onclick = function() {
     removemodal.style.display = "block";
     
     // Begin inner html string
-    var contentHTML = "<div class='modal-edge-remove'>Remove a node</div> <span class='removeclose'>&times;</span> <div id='addform'> Child to remove: <form action='removenode.php> Remove child: <select name='children'>";
+    var contentHTML = "<div class='modal-edge-remove'>Remove a node</div> <span class='removeclose'>&times;</span> <div id='addform'> <form action='removenode.php> Full name: <input type='text' id='fullname' placeholder='Trevor'> <br> Child to remove: <select name='children'>";
     
-    /*
     var children = getChildren();
     
     for (i = 0; i < children.length; i++) {
-        contentHTML += "<option value='" + children[i] +"'>" + children[i] + "</option> ";
-    }*/
+        contentHTML += "<option value='" + children[i] + "'>" + children[i] + "</option> ";
+    }
+    
+    contentHTML += "</select> <br> <input type='submit' value='REMOVE PERSON FROM FAMILY!'> </form> </div>";
+    
     removecontent.innerHTML = contentHTML;
     
     removespan = document.getElementsByClassName("removeclose")[0];
@@ -208,14 +244,7 @@ removebtn.onclick = function() {
     
 }
 
-    // Create list to return
-    var quotedNames = [];
     
-    // Begin arduous task of getting nodes...
-    var result = JSON.stringify(simple_chart_config.nodeStructure);
-    var list = result.split('[')
-    console.log(result);
-    console.log(list);
 
 addbtn.onclick = function() {
     
@@ -223,7 +252,7 @@ addbtn.onclick = function() {
     addmodal.style.display = "block";
     
     // Begin inner html string
-    var contentHTML = "<div class='modal-edge-add'>Add a node</div> <span class='addclose'>&times;</span> <div id='addform'> Full name: <input type='text'id='fullname' placeholder='Trevor'> <br> <form action='addnode.php'> Child of: <select name='parents'>";
+    var contentHTML = "<div class='modal-edge-add'>Add a node</div> <span class='addclose'>&times;</span> <div id='addform'> <form action='addnode.php'> Full name: <input type='text' id='fullname' placeholder='Trevor'> <br> Child of: <select name='parents'>";
     
     // Perform search to find all names in the tree
     var parents = getParents();
