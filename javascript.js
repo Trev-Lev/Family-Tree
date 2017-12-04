@@ -181,10 +181,54 @@ var addbtn = document.getElementById("addbutton");
 var addspan = document.getElementsByClassName("addclose")[0];
 var addcontent = document.getElementById('modal-content-add'); 
 
+/* Modal for removing existing nodes */
 var removemodal = document.getElementById('removemodal');
 var removebtn = document.getElementById('removebutton');
 var removespan = document.getElementsByClassName('removeclose')[0];
 var removecontent = document.getElementById('modal-content-remove');
+
+/* Modal for editing existing nodes */
+var editmodal = document.getElementById('editmodal');
+var editbtn = document.getElementById('editbutton');
+// Use "add" or "remove" spans
+var editcontent = document.getElementById('modal-content-edit');
+
+editbtn.onclick = function() {
+
+    editmodal.style.display = "block";
+    
+    // Get list of all names of parents
+    var nodes = getParents();
+    
+    // <form action='editnode.php'>
+    
+    var contentHTML = "<div class='modal-edge-edit'> Edit a node </div> <span class='addclose'>&times;</span> <div id='addform'> <br> Node to edit: <select id='nodes-edit-id' name='children'>";
+
+    for (i = 0; i < nodes.length; i++) {
+        contentHTML += "<option value='" + nodes[i] + "'>" + nodes[i] + "</option> "; 
+    }
+    
+    contentHTML += "</select> </div>";
+    editcontent.innerHTML = contentHTML;
+    
+    // Get the selection tag
+    var selection = document.getElementById("nodes-edit-id");
+    
+    // On selection of node, open up a field for everything!
+    var nodeToEdit = selection.value;
+    
+    //
+    $('#nodes-edit-id').on('change', function() {
+        alert(this.value);
+    })
+    
+    // Reusing the addspan span
+    addspan = document.getElementsByClassName("addclose")[0];
+    addspan.onclick = function() {
+        editmodal.style.display = "none";
+    }
+    
+}
 
 removebtn.onclick = function() {
     
@@ -197,24 +241,24 @@ removebtn.onclick = function() {
         removemodal.style.display = "block";
         
         // Begin inner html string
-        var contentHTML = "<div class='modal-edge-remove'>Remove a node</div> <span class='removeclose'>&times;</span> <div id='addform'> <form action='removenode.php> <br> Full name: <input type='text' id='fullname' placeholder='Trevor'> <br> Child to remove: <select name='children'>";
+        var contentHTML = "<div class='modal-edge-remove'>Remove a node</div> <span class='removeclose'>&times;</span> <div id='addform'> <form action='removenode.php'> <br><br> Child to remove: <select name='children'>";
 
         for (i = 0; i < children.length; i++) {
             contentHTML += "<option value='" + children[i] + "'>" + children[i] + "</option> ";
         }
 
-        contentHTML += "</select> <br> <input type='submit' value='REMOVE PERSON FROM FAMILY!'> </form> </div>";
+        contentHTML += "</select> <br><br><br> <input type='submit' value='REMOVE PERSON FROM FAMILY!'> </form> </div>";
 
         removecontent.innerHTML = contentHTML;
         
         removespan = document.getElementsByClassName("removeclose")[0];
         removespan.onclick = function() {
-        removemodal.style.display = "none";
-    }
-    } else {
-        // Else, an empty set was returned.
-        alert("Don't do that. You can't remove more people.");
-    }
+            removemodal.style.display = "none";
+        }
+        } else {
+            // Else, an empty set was returned.
+            alert("Don't do that. You can't remove more people.");
+        }
 }
 
 addbtn.onclick = function() {
@@ -259,6 +303,8 @@ window.onclick = function(event) {
         addmodal.style.display = "none";
     } else if (event.target == removemodal) {
         removemodal.style.display = "none";
+    } else if (event.target == editmodal) {
+        editmodal.style.display = "none";
     }
 }
 
