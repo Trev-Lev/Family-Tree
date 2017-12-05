@@ -1,0 +1,45 @@
+{
+"nodeStructure": {
+
+    "text": { "name": "Parent node",
+            "title": "February 25th, 1997"
+          },
+    "HTMLclass": "blue",
+
+    "children": [
+        {
+            "text": { "name": "First child",
+                    "title": "June 18th, 2017"
+                  },
+            "HTMLclass": "white"
+        },
+        {
+            "text": { "name": "Another child",
+                    "title": "July 19th, 1997"
+                  },
+            "HTMLclass": "white"
+        },
+        {
+            "text": { "name": "Trevor",
+                    "title": "In the near future"
+                  },
+            "HTMLclass": "white",
+            "children": [
+                {
+                    "text": { "name": "John",
+                            "title": "December 25th, 2017"
+                          },
+                    "HTMLclass": "blue"
+                },
+                {
+                    "text": { "name": "Jay",
+                            "title": "January 1st, 2017"
+                          },
+                    "HTMLclass": "blue"
+                }
+            ]
+        }
+    ]
+
+}
+}

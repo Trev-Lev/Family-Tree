@@ -14,7 +14,7 @@ CREATE TABLE familyTree(
 );
 
 --YYYYMMDD
-INSERT INTO members VALUES (1, 'Richard Shakespeare' 14900101, 15610210);
+INSERT INTO members VALUES (1, 'Richard Shakespeare', 14900101, 15610210);
 INSERT INTO members VALUES (2, 'John Shakespeare', 15310101, 16010907);
 INSERT INTO members VALUES (3, 'Joan Shakespeare', 15580915, NULL);
 INSERT INTO members VALUES (4, 'Margaret Shakespeare', 15621202, 15630430);

@@ -4,6 +4,8 @@
 
 */
 
+
+
 var simple_chart_config = (function() {
         var json = null;
         $.ajax({
