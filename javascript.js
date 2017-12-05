@@ -4,7 +4,26 @@
 
 */
 
+var simple_chart_config = (function() {
+        var json = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': "tree.json",
+            'dataType': "json",
+            'success': function (data) {
+                json = data;
+            }
+        });
+        return json;
+    })();
+
+
+//The data below is now in a separate file as called above
+
+/*
 var simple_chart_config = {
+
     chart: {
         container: "#tree-simple",
         scrollbar: "fancy",
@@ -25,7 +44,7 @@ var simple_chart_config = {
     },
 
     nodeStructure: {
-        
+
         text: { name: "Parent node",
                 title: "February 25th, 1997"
               },
@@ -67,9 +86,12 @@ var simple_chart_config = {
                 ]
             }
         ]
-    //      */
+
+
     }
 };
+*/
+
 
 // Returns a list of the names of all the nodes, as all are eligible to be parents
 // In the nested for loop, modify to check for end of name field if additional fields are added.
@@ -196,38 +218,38 @@ var editcontent = document.getElementById('modal-content-edit');
 editbtn.onclick = function() {
 
     editmodal.style.display = "block";
-    
+
     // Get list of all names of parents
     var nodes = getParents();
-    
+
     // <form action='editnode.php'>
-    
+
     var contentHTML = "<div class='modal-edge-edit'> Edit a node </div> <span class='addclose'>&times;</span> <div id='addform'> <br> Node to edit: <select id='nodes-edit-id' name='children'>";
 
     for (i = 0; i < nodes.length; i++) {
-        contentHTML += "<option value='" + nodes[i] + "'>" + nodes[i] + "</option> "; 
+        contentHTML += "<option value='" + nodes[i] + "'>" + nodes[i] + "</option> ";
     }
-    
+
     contentHTML += "</select> </div>";
     editcontent.innerHTML = contentHTML;
-    
+
     // Get the selection tag
     var selection = document.getElementById("nodes-edit-id");
-    
+
     // On selection of node, open up a field for everything!
     var nodeToEdit = selection.value;
-    
+
     //
     $('#nodes-edit-id').on('change', function() {
         alert(this.value);
     })
-    
+
     // Reusing the addspan span
     addspan = document.getElementsByClassName("addclose")[0];
     addspan.onclick = function() {
         editmodal.style.display = "none";
     }
-    
+
 }
 
 removebtn.onclick = function() {
