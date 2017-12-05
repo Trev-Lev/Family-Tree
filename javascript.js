@@ -27,7 +27,7 @@ var simple_chart_config = {
     nodeStructure: {
         
         text: { name: "Parent node",
-                title: "February 25th, 1997"
+                title: "1997"
               }, 
         HTMLclass: "blue",
         
@@ -36,31 +36,31 @@ var simple_chart_config = {
         children: [
             {   
                 text: { name: "First child",
-                        title: "June 18th, 2017"
+                        title: "2017"
                       },
                 HTMLclass: "white"
             },
             {
                 text: { name: "Another child",
-                        title: "July 19th, 1997"
+                        title: "1997-2015"
                       },
                 HTMLclass: "white"
             },
             {
                 text: { name: "Trevor",
-                        title: "In the near future"
+                        title: "2011"
                       },
                 HTMLclass: "white",
                 children: [
                     {
                         text: { name: "John",
-                                title: "December 25th, 2017"
+                                title: "2017"
                               },
                         HTMLclass: "blue"
                     },
                     {
                         text: { name: "Jay",
-                                title: "January 1st, 2017"
+                                title: "2017"
                               },
                         HTMLclass: "blue"
                     }
@@ -175,6 +175,26 @@ function redraw() {
     tree = new Treant(simple_chart_config);
 }
 
+// Functions to change display of death input field.
+// I know they can be one function but I am too lazy to do the mental work required for it
+function checkboxChange(checkElement) {
+    var deathinput = document.getElementById('editdeathdiv');
+    if (checkElement.checked) {
+        deathinput.style.display = 'block';
+    } else {
+        deathinput.style.display = 'none';
+    }
+}
+
+function addCheckChange(checkElement) {
+    var deathinput = document.getElementById('adddeathdiv');
+    if (checkElement.checked) {
+        deathinput.style.display = 'block';
+    } else {
+        deathinput.style.display = 'none';
+    }
+}
+
 /* Modal for adding new nodes */
 var addmodal = document.getElementById('addmodal');
 var addbtn = document.getElementById("addbutton");
@@ -190,11 +210,12 @@ var removecontent = document.getElementById('modal-content-remove');
 /* Modal for editing existing nodes */
 var editmodal = document.getElementById('editmodal');
 var editbtn = document.getElementById('editbutton');
-// Use "add" or "remove" spans
+var editspan = document.getElementsByClassName('editclose')[0];
 var editcontent = document.getElementById('modal-content-edit');
 
 editbtn.onclick = function() {
 
+    // make visible
     editmodal.style.display = "block";
     
     // Get list of all names of parents
@@ -202,31 +223,41 @@ editbtn.onclick = function() {
     
     // <form action='editnode.php'>
     
-    var contentHTML = "<div class='modal-edge-edit'> Edit a node </div> <span class='addclose'>&times;</span> <div id='addform'> <br> Node to edit: <select id='nodes-edit-id' name='children'>";
+    var contentHTML = "<div class='modal-edge-edit'> Edit a node </div> <span class='editclose'>&times;</span> <div id='addform'> <br> Node to edit: <select id='nodes-edit-id' name='children'>";
 
     for (i = 0; i < nodes.length; i++) {
         contentHTML += "<option value='" + nodes[i] + "'>" + nodes[i] + "</option> "; 
     }
     
-    contentHTML += "</select> </div>";
+    contentHTML += "</select> </div> <div id='edit-options'></div>";
     editcontent.innerHTML = contentHTML;
+    var editDiv = document.getElementById('edit-options');
     
-    // Get the selection tag
-    var selection = document.getElementById("nodes-edit-id");
-    
-    // On selection of node, open up a field for everything!
-    var nodeToEdit = selection.value;
-    
-    //
+    // On change, open up menu to edit for the given node
     $('#nodes-edit-id').on('change', function() {
-        alert(this.value);
-    })
+        
+        editDiv.style.display = "block";
+        
+        // Get the selection tag
+        var selection = document.getElementById("nodes-edit-id");
+        // On selection of node, open up a field for everything!
+        var nodename = selection.value;
+        // Get the node that corresponds to the name retrieved
+        //var node = depthFirstSearch(nodename); 
+        
+        // Insert HTML fields that correspond to the thing
+        var editHTML = "<form action='editnode.php'> <br> Full name: <input type='text' id='editfullname' placeholder='" + nodename + "'> <br> Birthdate: <input type='date' id='editbirthdate'> Deceased? <input type='checkbox' id='checkbox' onchange='checkboxChange(this)'> <br> <div id='editdeathdiv'> Death: <input type='date' id='editdeathdate'> </div> <br> <input type='submit' value='Submit changes'> </form>";
     
-    // Reusing the addspan span
-    addspan = document.getElementsByClassName("addclose")[0];
-    addspan.onclick = function() {
+        // Assign inner HTML
+        editDiv.innerHTML = editHTML; 
+    });
+    
+    editspan = document.getElementsByClassName('editclose')[0];
+    editspan.onclick = function() {
         editmodal.style.display = "none";
     }
+    
+    // editnode.php to use an update statement
     
 }
 
@@ -277,8 +308,8 @@ addbtn.onclick = function() {
         contentHTML += "<option value='" + parents[i] + "'>" + parents[i] + "</option> ";
     }
 
-    // Add button to finalize addition of node to tree
-    contentHTML += "</select> <br> <input type='submit' value='Add to tree!'> </form> </div>";
+    // Add other fields + submit button
+    contentHTML += "</select> <br> Birthdate: <input type='date' id='birthdate'> Deceased? <input type='checkbox' onchange=addCheckChange(this)> <br> <div id='adddeathdiv'> Death: <input type='date' id='deathdate'> </div> <br> <input type='submit' value='Add to tree!'> </form> </div>";
     
     // Modify inner html
     addcontent.innerHTML = contentHTML;
