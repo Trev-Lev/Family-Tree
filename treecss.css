@@ -7,9 +7,15 @@
     z-index: 1;
 }
 
+#edit-options,
 #center {
     text-align: center;
     margin: auto;
+}
+
+#adddeathdiv,
+#editdeathdiv {
+    display: none;
 }
 
 /* For addition of new nodes into the tree, thanks W3schools */
@@ -122,6 +128,7 @@
     background-color: rgba(0,0,0,0.4);  /* Black w/ opacity */
 }
 
+.editclose,
 .addclose,
 .removeclose {
     color: #aaaaaa;
@@ -130,6 +137,8 @@
     font-weight: bold;
 }
 
+.editclose:hover,
+.editclose:focus,
 .addclose:hover,
 .removeclose:hover,
 .addclose:focus,
