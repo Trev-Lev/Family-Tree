@@ -3,19 +3,18 @@ CREATE TABLE members(
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   NAME VARCHAR(255) default '',
   dob DATE default NULL,
-  dod DATE default NULL,
+  dod DATE default NULL
 );
 
 -- Table to model tree
 CREATE TABLE familyTree(
   childID int NOT NULL,
   parentID int NOT NULL,
-  PRIMARY KEY (childID, parentID);
+  PRIMARY KEY (childID, parentID)
 );
 
 --YYYYMMDD
 INSERT INTO members VALUES (1, 'Richard Shakespeare' 14900101, 15610210);
---INSERT INTO members VALUES (2, 'Henry Shakespeare', NULL, 1569);
 INSERT INTO members VALUES (2, 'John Shakespeare', 15310101, 16010907);
 INSERT INTO members VALUES (3, 'Joan Shakespeare', 15580915, NULL);
 INSERT INTO members VALUES (4, 'Margaret Shakespeare', 15621202, 15630430);
@@ -37,6 +36,7 @@ INSERT INTO members VALUES (19, 'Shakespeare Quiney', 16160101, 16170101);
 INSERT INTO members VALUES (20, 'Richard Quiney', 16180101, 16390101);
 INSERT INTO members VALUES (21, 'Thomas Quiney', 16200101, 16390101);
 INSERT INTO members VALUES (22, 'John Bernard', NULL, 16740101);
+--INSERT INTO members VALUES (2, 'Henry Shakespeare', NULL, 1569);
 
 
 INSERT INTO familyTree VALUES
