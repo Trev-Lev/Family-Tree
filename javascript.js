@@ -5,7 +5,7 @@
 */
 
 
-
+/*
 var simple_chart_config = (function() {
         var json = null;
         $.ajax({
@@ -19,6 +19,40 @@ var simple_chart_config = (function() {
         });
         return json;
     })();
+*/
+
+
+//var simple_chart_config = [];
+ var simple_chart_config = (function() {
+        var json = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': "tree1.json",
+            'dataType': "json",
+            'success': function (data) {
+                json = data;
+            }
+        });
+        return json;
+    })();
+
+      simple_chart_config.nodeStructure = (function() {
+            var json = null;
+            $.ajax({
+                'async': false,
+                'global': false,
+                'url': "tree3.json",
+                'dataType': "json",
+                'success': function (data) {
+                    json = data;
+                }
+            });
+            return json;
+        })();
+
+
+
 
 
 //The data below is now in a separate file as called above
@@ -43,9 +77,11 @@ var simple_chart_config = {
                 connectorsAnimation: "bounce",
                 connectorsSpeed: 700
         }
-    },
+    }
+  };
 
-    nodeStructure: {
+simple_chart_config.nodeStructure = {
+  //  nodeStructure: {
 
         text: { name: "Parent node",
                 title: "February 25th, 1997"
@@ -90,7 +126,7 @@ var simple_chart_config = {
         ]
 
 
-    }
+  //  }
 };
 */
 
