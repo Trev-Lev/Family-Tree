@@ -11,7 +11,7 @@ if ($conn->connect_error)
 
 
 //echo "Work";
-$sql="SELECT NAME, id, parentID FROM members";
+$sql="SELECT NAME, id, parentID, dob, dod FROM members";
 
 $person = array();
 //$text = array();
@@ -24,17 +24,21 @@ while($row=mysqli_fetch_array($result))
 $name=$row['NAME'];
 $id=$row['id'];
 $parentid=$row['parentID'];
+$htmlclass='white';
+//$dob=$row['dob'];
+//$dod=$row['dod'];
 /*
 echo $id;
 echo $name;
 */
 
 //$person = array('id'=> $id, 'parentid'=>$parentid, 'name'=>$name);
+//$text = array('name' => $name,'dob'=>$dob,'dod'=>$dod);
 $text = array('name' => $name);
 //$text1 = array('text'=>$text);
 
 
-$members[] = array('text'=>$text,'id'=>$id,'parentid'=>$parentid);
+$members[] = array('text'=>$text,'id'=>$id,'parentid'=>$parentid,'HTMLclass'=>$htmlclass);
 
 }
 
