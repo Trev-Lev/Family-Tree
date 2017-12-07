@@ -1,13 +1,15 @@
 {
-    "text": { "name": "Parent node",
-            "title": "February 25th, 1997"
+    "text": { 
+      "name": "Parent node",
+            "title": "February 25th, 1997",
+            "id":"1"
           },
     "HTMLclass": "blue",
 
     "children": [
         {
             "text": { "name": "First child",
-                    "title": "June 18th, 2017"
+                    "title": "June 18th, 2017",
                   },
             "HTMLclass": "white"
         },

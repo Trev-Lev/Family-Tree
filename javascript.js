@@ -36,7 +36,7 @@ var simple_chart_config = (function() {
         });
         return json;
     })();
-
+/*
       simple_chart_config.nodeStructure = (function() {
             var json = null;
             $.ajax({
@@ -50,6 +50,70 @@ var simple_chart_config = (function() {
             });
             return json;
         })();
+*/
+        //console.log(simple_chart_config.nodeStructure);
+
+
+
+        var sqlquery = (function() {
+              var json = null;
+              $.ajax({
+                  'async': false,
+                  'global': false,
+                  'url': "readFile.php",
+                  'dataType': "json",
+                  'success': function (data) {
+                      json = data;
+                  }
+              });
+              return json;
+          })();
+console.log(sqlquery);
+
+
+
+
+unflatten = function( array, parent, tree ){
+
+    tree = typeof tree !== 'undefined' ? tree : [];
+    parent = typeof parent !== 'undefined' ? parent : { id: 0 };
+
+    var children = _.filter( array, function(child){ return child.parentid == parent.id; });
+
+    if( !_.isEmpty( children )  ){
+        if( parent.id == 0 ){
+           tree = children;
+        }else{
+           parent['children'] = children;
+        }
+        _.each( children, function( child ){ unflatten( array, child ) } );
+    }
+
+    return tree;
+}
+
+
+
+//var sortedquery = _queryTreeSort(sqlquery);
+//console.log(sortedquery);
+
+var sortedquery = unflatten(sqlquery);
+//simple_chart_config.nodeStructure = unflatten(sqlquery);
+
+//console.dir(sortedquery);
+
+//var string = sortedquery.toString();
+//var newString = string.substring(1, string.length-1);
+//console.log(string);
+//var array = JSON.parse(newString);
+//simple_chart_config.nodeStructure = newString
+simple_chart_config.nodeStructure = sortedquery[0];
+//console.log(newString);
+//simple_chart_config.nodeStructure = _makeTree(sortedquery);
+
+
+
+
 
 
 
@@ -79,7 +143,8 @@ var simple_chart_config = {
         }
     }
   };
-
+*/
+/*
 simple_chart_config.nodeStructure = {
   //  nodeStructure: {
 

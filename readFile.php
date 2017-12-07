@@ -13,6 +13,8 @@ if ($conn->connect_error)
 //echo "Work";
 $sql="SELECT NAME, id, parentID FROM members";
 
+$person = array();
+//$text = array();
 $response = array();
 $members = array();
 $result=mysqli_query($conn,$sql);
@@ -27,7 +29,12 @@ echo $id;
 echo $name;
 */
 
-$members[] = array('id'=> $id, 'parentid'=>$parentid, 'name'=>$name);
+//$person = array('id'=> $id, 'parentid'=>$parentid, 'name'=>$name);
+$text = array('name' => $name);
+//$text1 = array('text'=>$text);
+
+
+$members[] = array('text'=>$text,'id'=>$id,'parentid'=>$parentid);
 
 }
 
