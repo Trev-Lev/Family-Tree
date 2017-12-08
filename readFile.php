@@ -1,12 +1,21 @@
 <?php
+//session_start();
 require ('db_credentials.php');
+//include('logmein.php');
+session_start();
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error)
 {
     die("Connection failed: " . $conn->connect_error);
 }
 //echo "Work";
-$sql="SELECT NAME, id, parentID, dob, dod FROM members";
+$userUniqueID = $_SESSION['id1'];
+
+//echo $userUniqueID;
+//sleep(5);
+
+$sql="SELECT NAME, id, parentID, dob, dod FROM members WHERE userID = $userUniqueID";
+//$sql="SELECT NAME, id, parentID, dob, dod FROM members";
 $person = array();
 //$text = array();
 $response = array();
