@@ -7,12 +7,7 @@ CREATE TABLE members(
   parentID INT default 0;
 );
 
--- Table to model tree
-CREATE TABLE familyTree(
-  childID int NOT NULL,
-  parentID int NOT NULL,
-  PRIMARY KEY (childID, parentID)
-);
+
 
 --YYYYMMDD
 INSERT INTO members VALUES (1, 'Richard Shakespeare', 14900101, 15610210, 0);
@@ -39,15 +34,18 @@ INSERT INTO members VALUES (21, 'Thomas Quiney', 16200101, 16390101, 13);
 INSERT INTO members VALUES (22, 'John Bernard', NULL, 16740101, 18);
 --INSERT INTO members VALUES (2, 'Henry Shakespeare', NULL, 1569);
 
+CREATE TABLE users(
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	loginID varchar(255) NOT NULL,
+	password varchar(255) NOT NULL
+);
+
+ALTER TABLE members
+ADD userID INT NOT NULL;
+
 -- I created users:
 
 -- long string is hashed password for "Databaseisgr8!"
 INSERT INTO users (loginID, password) VALUES ('Trevor', '$2y$10$Zd.I6RP9p/sXH/jkOwl.f.ItAwQ5L6nKuLBeVUY..I1SiE4wUyDhG');
 
-/*No longer used */
-/*
-INSERT INTO familyTree VALUES
-(2, 1), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2), (8, 2),
-(9, 2), (10, 2), (11, 5), (12, 5), (13, 5), (14, 7), (15, 7),
-(16, 7), (17, 7), (18, 11), (19, 13), (20, 13), (21, 13), (22, 18);
-*/
+
