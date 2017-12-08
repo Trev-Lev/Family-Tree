@@ -4,21 +4,14 @@
     // Session start? Sure man
     session_start();
 
-    // Always call session_start() to use $_SESSION[]
-    if(!session_start()) {
-        header("Location: error.php");
-        exit;
-    }
-
-    //$loggedIn = empty($_SESSION['loggedin']) ? false : $_SESSION['loggedin']; is the same
-    $loggedIn = $_SESSION['loggedin'];
+    $loggedIn = $_SESSION['username'];
 
     // To check if we are logged in later:
     if ($_SESSION['isIn'] == true)
         $message = "You're currently logged in as '$loggedIn.'";
     else {
         $message = "You're not logged in.";
-        header("Location: login.php");
+        header("Location: login.html");
         exit;
     }
 ?>
