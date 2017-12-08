@@ -30,6 +30,11 @@
     display: none;
 }
 
+.centered {
+    text-align: center;
+    margin: auto;
+}
+
 /* For addition of new nodes into the tree, thanks W3schools */
 .addmodal {
     display: none;                      /* Hidden by default */

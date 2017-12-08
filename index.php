@@ -29,6 +29,11 @@
     <h2 id="titlemessage">Family Tree</h2>
     <br>
     <p id="loginmessage"><?php echo $message ?></p>
+    <?php
+        if ($_SESSION['isIn'] == true) {
+            echo "<form action='logout.php' method='post' class='centered'> <input type='submit' value='Log out' id='logout'> </form>";
+        }
+    ?>
     
     <!-- Tree -->
     <div id="tree-simple" class="base"></div>
