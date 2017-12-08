@@ -39,6 +39,11 @@ INSERT INTO members VALUES (21, 'Thomas Quiney', 16200101, 16390101, 13);
 INSERT INTO members VALUES (22, 'John Bernard', NULL, 16740101, 18);
 --INSERT INTO members VALUES (2, 'Henry Shakespeare', NULL, 1569);
 
+-- I created users:
+
+-- long string is hashed password for "Databaseisgr8!"
+INSERT INTO users (loginID, password) VALUES ('Trevor', '$2y$10$Zd.I6RP9p/sXH/jkOwl.f.ItAwQ5L6nKuLBeVUY..I1SiE4wUyDhG');
+
 /*No longer used */
 /*
 INSERT INTO familyTree VALUES

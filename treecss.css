@@ -7,10 +7,22 @@
     z-index: 1;
 }
 
+#loginformdiv {
+    text-align: left;
+    margin: auto;
+}
+
 #edit-options,
-#center {
+#center,
+#titlemessage {
     text-align: center;
     margin: auto;
+}
+
+#loginmessage {
+    text-align: center;
+    margin: auto;
+    font-size: 14px;
 }
 
 #adddeathdiv,

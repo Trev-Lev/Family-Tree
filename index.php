@@ -1,4 +1,27 @@
 <!DOCTYPE html>
+<?php
+    
+    // Session start? Sure man
+    session_start();
+
+    // Always call session_start() to use $_SESSION[]
+    if(!session_start()) {
+        header("Location: error.php");
+        exit;
+    }
+
+    //$loggedIn = empty($_SESSION['loggedin']) ? false : $_SESSION['loggedin']; is the same
+    $loggedIn = $_SESSION['loggedin'];
+
+    // To check if we are logged in later:
+    if ($_SESSION['isIn'])
+        $message = "You're currently logged in as '$loggedIn.'";
+    else {
+        $message = "You're not logged in.";
+        //header("Location: login.php");
+        //exit;
+    }
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -10,8 +33,10 @@
 </head>
 <body>
     
-    <h2 id="center">Family Tree</h2>
-
+    <h2 id="titlemessage">Family Tree</h2>
+    <br>
+    <p id="loginmessage"><?php echo $message ?></p>
+    
     <!-- Tree -->
     <div id="tree-simple" class="base"></div>
 
@@ -37,12 +62,8 @@
         <button id="editbutton">Edit a member</button>
     </div>
 
-    <div id="center">
-        <button id="nexttreebutton">Next tree --></button>
-    </div>
-
     <!-- javascript -->
-<script type = "text/javascript" src="node_modules/underscore/underscore-min.js"></script>
+    <script type = "text/javascript" src="node_modules/underscore/underscore-min.js"></script>
     <script src="treant-js-master/vendor/raphael.js"></script>
     <script src="treant-js-master/Treant.js"></script>
     <script src="jquery-3.2.1.min.js"></script>
