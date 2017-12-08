@@ -30,14 +30,13 @@ echo $name;
 $text = array('name' => $name, 'title' => $id);
 //$text1 = array('text'=>$text);
 $members[] = array('text'=>$text,'id'=>$id,'parentid'=>$parentid,'HTMLclass'=>$htmlclass);
-=======
-$text = array('name' => $name);
+
+//$text = array('name' => $name);
 //$text1 = array('text'=>$text);
 
 
-$members[] = array('text'=>$text,'id'=>$id,'parentid'=>$parentid,'HTMLclass'=>$htmlclass);
+//$members[] = array('text'=>$text,'id'=>$id,'parentid'=>$parentid,'HTMLclass'=>$htmlclass);
 
->>>>>>> 3d2bc686e68fabbe0477df0b3425c003940daaf8
 }
 //$response['members'] = $members;
 //echo json_encode($response);
