@@ -16,29 +16,18 @@ Entity Relationship Diagram (sorry about the disgusting watermark, the software 
 
 Database schema:
 
-CREATE TABLE members(
+    CREATE TABLE members(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    NAME VARCHAR(255) default '',
+    dob DATE default NULL,
+    dod DATE default NULL,
+    parentID INT default 0,
+    userID INT NOT NULL
+    );
 
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  
-  NAME VARCHAR(255) default '',
-  
-  dob DATE default NULL,
-  
-  dod DATE default NULL,
-  
-  parentID INT default 0,
-  
-  userID INT NOT NULL
-  
-);
-
-CREATE TABLE users (
-
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  
-  loginID VARCHAR(255),
-  
-  password VARCHAR(255)
-  
-);
+    CREATE TABLE users (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    loginID VARCHAR(255),
+    password VARCHAR(255) 
+    );
 
