@@ -13,3 +13,20 @@ The three buttons to edit the tree are found at the bottom of the page - Add, re
 Entity Relationship Diagram (sorry about the disgusting watermark, the software linked in the requirements is dumb)
 ![ERD](https://github.com/Trev-Lev/Family-Tree/blob/master/dev2/ERD.png "ERD Diagram")
 
+Database schema:
+
+CREATE TABLE members(
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  NAME VARCHAR(255) default '',
+  dob DATE default NULL,
+  dod DATE default NULL,
+  parentID INT default 0,
+  userID INT NOT NULL
+);
+
+CREATE TABLE users (
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  loginID VARCHAR(255),
+  password VARCHAR(255)
+);
+
