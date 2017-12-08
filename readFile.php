@@ -7,10 +7,7 @@ if ($conn->connect_error)
 }
 //echo "Work";
 $sql="SELECT NAME, id, parentID, dob, dod FROM members";
-<<<<<<< HEAD
-=======
 
->>>>>>> 3d2bc686e68fabbe0477df0b3425c003940daaf8
 $person = array();
 //$text = array();
 $response = array();
@@ -30,7 +27,6 @@ echo $name;
 */
 //$person = array('id'=> $id, 'parentid'=>$parentid, 'name'=>$name);
 //$text = array('name' => $name,'dob'=>$dob,'dod'=>$dod);
-<<<<<<< HEAD
 $text = array('name' => $name, 'title' => $id);
 //$text1 = array('text'=>$text);
 $members[] = array('text'=>$text,'id'=>$id,'parentid'=>$parentid,'HTMLclass'=>$htmlclass);
