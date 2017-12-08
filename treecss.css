@@ -1,7 +1,7 @@
 #tree-simple {
     margin: auto;
     width: 99%;
-    height: 500px;
+    height: 700px;
     border: 2px solid black;
     background-color: #d6eaf8;
     z-index: 1;
@@ -76,7 +76,7 @@
     font-size: 24pt;
     border-collapse: collapse;
 }
- 
+
 /* CSS for removing nodes from the tree */
 .modal-edge-remove {
     position: relative;
@@ -185,13 +185,13 @@ something-blue: #34495e
     text-align: center;
 }
 
-.Treant .node.collapsed { 
+.Treant .node.collapsed {
     /*background-color: #DEF82D;*/
     font-weight: bold;
 }
 /* End collapsed nodes CSS */
 
-.Treant .node.collapsed .collapse-switch { 
+.Treant .node.collapsed .collapse-switch {
     background: none;
 }
 
