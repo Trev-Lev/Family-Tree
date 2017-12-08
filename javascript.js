@@ -53,8 +53,6 @@ var simple_chart_config = (function() {
 */
         //console.log(simple_chart_config.nodeStructure);
 
-
-
         var sqlquery = (function() {
               var json = null;
               $.ajax({
@@ -69,9 +67,6 @@ var simple_chart_config = (function() {
               return json;
           })();
 console.log(sqlquery);
-
-
-
 
 unflatten = function( array, parent, tree ){
 
@@ -111,14 +106,6 @@ simple_chart_config.nodeStructure = sortedquery[0];
 //console.log(newString);
 //simple_chart_config.nodeStructure = _makeTree(sortedquery);
 
-
-
-
-
-
-
-
-
 //The data below is now in a separate file as called above
 
 /*
@@ -143,8 +130,8 @@ var simple_chart_config = {
         }
     }
   };
-*/
-/*
+
+
 simple_chart_config.nodeStructure = {
   //  nodeStructure: {
 
@@ -195,7 +182,6 @@ simple_chart_config.nodeStructure = {
 };
 */
 
-
 // Returns a list of the names of all the nodes, as all are eligible to be parents
 // In the nested for loop, modify to check for end of name field if additional fields are added.
 // The same applies for the getChildren() function.
@@ -221,6 +207,28 @@ function getParents() {
         quotedNames.push(stringToAdd);
     }
     return quotedNames; // Finished product
+}
+
+// Returns a list of IDs to be used for adding nodes to the tree
+function getIDs() {
+    var quotedIDs = [];
+    var result = JSON.stringify(simple_chart_config.nodeStructure);
+    //console.log(result);
+    var list = result.split('"id":');
+    list.shift();
+    //console.log(list);
+
+    // Now, parse until '}' is found - "" gets ignored
+    for (i = 0; i < list.length; i++) {
+        var stringToAdd = "";
+        //console.log("hi");
+        for (j = 0; list[i][j] != '}' && list[i][j] != ","; j++) {
+            if (list[i][j] != '"') stringToAdd += list[i][j];
+        }
+        quotedIDs.push(stringToAdd);
+    }
+    //console.log(quotedIDs);
+    return quotedIDs;
 }
 
 // Returns a list of names of all nodes that do NOT have children (leaf nodes)
@@ -278,27 +286,63 @@ function getChildren() {
     return leafNodes;
 }
 
+// Returns IDs for leaf nodes
+function getLeafIDs() {
+    
+    // Create a deep copy. This is necessary or else everything is modified.
+    var deepcopy = jQuery.extend(true, {}, simple_chart_config.nodeStructure);
+
+    // Create list to return
+    var quotedNames = [];
+    var currentNode = deepcopy;
+    if (currentNode.children == null) {
+        // If there is nothing to remove, return the empty set.
+        // The function will alert the user that there are no nodes to remove.
+        return quotedNames;
+    }
+
+    // If program reaches this point, the base level node has children and this is safe
+    var stack = currentNode.children;
+
+    // Simple depth-first-search in javascript.
+    // I feel like a cool person for doing this
+    while(stack.length > 0) {
+        currentNode = stack.pop();
+        if (currentNode.children != null) {
+            stack.push(currentNode.children);
+        } else {
+            // If the current node has no children, add to the list
+            quotedNames.push(currentNode);
+        }
+    }
+
+    // Get a long string to parse
+    var asString = JSON.stringify(quotedNames);
+
+    // Split into an array of strings
+    var list = asString.split('"id":');
+
+    // Remove first element of array
+    list.shift();
+
+    // Final output array. Just the names.
+    var leafNodes = [];
+
+    // Now, parse until '}' is found - "" gets ignored
+    for (i = 0; i < list.length; i++) {
+        var stringToAdd = "";
+        for (j = 0; list[i][j] != '}' && list[i][j] != ","; j++) {
+            if (list[i][j] != '"') stringToAdd += list[i][j];
+        }
+        leafNodes.push(stringToAdd);
+    }
+
+    // Return only the leaf nodes of the tree.
+    return leafNodes;
+}
+
 // Creates the tree!
 var tree = new Treant(simple_chart_config);
-
-// Don't know if I will use yet to be honest
-function add() {
-
-    // Display a modal asking for characteristics
-    // If success, enter into database and redraw
-
-    // Modal displayed
-
-    redraw();
-}
-
-// This function will have some php interaction. It needs to retrieve everything from the database,
-// import it into the JSON object simple_chart_config.nodeStructure, and then
-// redraw the tree: tree = new Treant(simple_chart_config);
-function redraw() {
-    tree = "";
-    tree = new Treant(simple_chart_config);
-}
 
 // Functions to change display of death input field.
 // I know they can be one function but I am too lazy to do the mental work required for it
@@ -371,7 +415,7 @@ editbtn.onclick = function() {
         //var node = depthFirstSearch(nodename);
 
         // Insert HTML fields that correspond to the thing
-        var editHTML = "<form action='editnode.php'> <br> Full name: <input type='text' id='editfullname' placeholder='" + nodename + "'> <br> Birthdate: <input type='date' id='editbirthdate'> Deceased? <input type='checkbox' id='checkbox' onchange='checkboxChange(this)'> <br> <div id='editdeathdiv'> Death: <input type='date' id='editdeathdate'> </div> <br> <input type='submit' value='Submit changes'> </form>";
+        var editHTML = "<form action='editnode.php' method='post'> <br> Full name: <input type='text' name='editfullname' id='editfullname' placeholder='" + nodename + "'> <br> Birthdate: <input type='date' id='editbirthdate' name='editbirthdate'> Deceased? <input type='checkbox' id='checkbox' onchange='checkboxChange(this)'> <br> <div id='editdeathdiv'> Death: <input type='date' id='editdeathdate' name='editdeathdate'> </div> <br> <input type='submit' value='Submit changes'> </form>";
 
         // Assign inner HTML
         editDiv.innerHTML = editHTML;
@@ -391,16 +435,19 @@ removebtn.onclick = function() {
     // Get names of leaf nodes only
     var children = getChildren();
 
+    // Get IDs of leaf nodes only
+    var IDs = getLeafIDs();
+    
     if (children.length > 0) {
 
         // Make modal visible
         removemodal.style.display = "block";
 
         // Begin inner html string
-        var contentHTML = "<div class='modal-edge-remove'>Remove a node</div> <span class='removeclose'>&times;</span> <div id='addform'> <form action='removenode.php'> <br><br> Child to remove: <select name='children'>";
+        var contentHTML = "<div class='modal-edge-remove'>Remove a node</div> <span class='removeclose'>&times;</span> <div id='addform'> <form action='removenode.php' method='post'> <br><br> Child to remove: <select name='children'>";
 
         for (i = 0; i < children.length; i++) {
-            contentHTML += "<option value='" + children[i] + "'>" + children[i] + "</option> ";
+            contentHTML += "<option value='" + IDs[i] + "'>" + children[i] + " - " + IDs[i] + "</option>";
         }
 
         contentHTML += "</select> <br><br><br> <input type='submit' value='REMOVE PERSON FROM FAMILY!'> </form> </div>";
@@ -411,10 +458,10 @@ removebtn.onclick = function() {
         removespan.onclick = function() {
             removemodal.style.display = "none";
         }
-        } else {
+    } else {
             // Else, an empty set was returned.
             alert("Don't do that. You can't remove more people.");
-        }
+    }
 }
 
 addbtn.onclick = function() {
@@ -423,18 +470,22 @@ addbtn.onclick = function() {
     addmodal.style.display = "block";
 
     // Begin inner html string
-    var contentHTML = "<div class='modal-edge-add'>Add a node</div> <span class='addclose'>&times;</span> <div id='addform'> <form action='addnode.php'> Full name: <input type='text' id='fullname' placeholder='Trevor'> <br> Child of: <select name='parents'>";
+    var contentHTML = "<div class='modal-edge-add'>Add a node</div> <span class='addclose'>&times;</span> <div id='addform'> <form action='addnode.php' method='post'> Full name: <input type='text' id='fullname' placeholder='Trevor' name='fullname'> <br> Child of: <select name='parents'>";
 
     // Perform search to find all names in the tree
     var parents = getParents();
+    
+    // Perform search to find all corresponding IDs in the tree - this will be corresponding to parents and getParents() function
+    var ids = getIDs();
 
     // For each parent, add an option to select it
     for (i = 0; i < parents.length; i++) {
-        contentHTML += "<option value='" + parents[i] + "'>" + parents[i] + "</option> ";
+        // Print out name of parents + id number they have
+        contentHTML += "<option value='" + ids[i] + "'>" + parents[i] + " - " + ids[i] + "</option> ";
     }
 
     // Add other fields + submit button
-    contentHTML += "</select> <br> Birthdate: <input type='date' id='birthdate'> Deceased? <input type='checkbox' onchange=addCheckChange(this)> <br> <div id='adddeathdiv'> Death: <input type='date' id='deathdate'> </div> <br> <input type='submit' value='Add to tree!'> </form> </div>";
+    contentHTML += "</select> <br> Birthdate: <input type='date' id='birthdate' name='birthdate'> Deceased? <input type='checkbox' onchange=addCheckChange(this)> <br> <div id='adddeathdiv'> Death: <input type='date' id='deathdate' name='deathdate'> </div> <br> <input type='submit' value='Add to tree!'> </form> </div>";
 
     // Modify inner html
     addcontent.innerHTML = contentHTML;
