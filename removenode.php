@@ -1,11 +1,11 @@
 <?php
 
     // db.conf or dbconf.php
-    require_once 'db.conf';
+    require_once 'db_credentials';
 
     $deleteThisID = $_POST['children'];
 
-    $conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
     // Error handling
     if ($conn -> connect_error) {
@@ -26,5 +26,6 @@
 
     header('Location: index.html');
     exit;
+
 
 ?>

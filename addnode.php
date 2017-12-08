@@ -1,14 +1,15 @@
+
 <?php
 
     // db.conf or dbconf.php
-    require ('db_credentials.php');
+    require_once 'db_credentials.php';
 
     $fullname = $_POST['fullname'];
 
     // Other data strings
     $childOf = $_POST['parents'];
     $birthdate = $_POST['birthdate'];
-    $deathdate = $_POST['deathdate'];   
+    $deathdate = $_POST['deathdate'];
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 

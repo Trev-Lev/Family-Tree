@@ -7,7 +7,6 @@ if ($conn->connect_error)
 }
 //echo "Work";
 $sql="SELECT NAME, id, parentID, dob, dod FROM members";
-
 $person = array();
 //$text = array();
 $response = array();
@@ -30,13 +29,9 @@ echo $name;
 $text = array('name' => $name, 'title' => $id);
 //$text1 = array('text'=>$text);
 $members[] = array('text'=>$text,'id'=>$id,'parentid'=>$parentid,'HTMLclass'=>$htmlclass);
-
 //$text = array('name' => $name);
 //$text1 = array('text'=>$text);
-
-
 //$members[] = array('text'=>$text,'id'=>$id,'parentid'=>$parentid,'HTMLclass'=>$htmlclass);
-
 }
 //$response['members'] = $members;
 //echo json_encode($response);
