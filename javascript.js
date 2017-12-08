@@ -1,7 +1,5 @@
 /*
-
     MODALS LOOKS WEIRD! MAYBE RESIZE THEM? I DONT KNOW
-
 */
 
 
@@ -110,18 +108,15 @@ simple_chart_config.nodeStructure = sortedquery[0];
 
 /*
 var simple_chart_config = {
-
     chart: {
         container: "#tree-simple",
         scrollbar: "fancy",
         connectors: {
             type: "step"    // Probably the best connector for a family tree structure
         },
-
         node: {
             collapsable: true,
         },
-
         animation: {
                 nodeAnimation: "easeOutQuad", // easeOutBounce
                 nodeSpeed: 700,
@@ -130,16 +125,12 @@ var simple_chart_config = {
         }
     }
   };
-
-
 simple_chart_config.nodeStructure = {
   //  nodeStructure: {
-
         text: { name: "Parent node",
                 title: "February 25th, 1997"
               },
         HTMLclass: "blue",
-
         // To test how the tree works with only one node (initial state), comment out like below:
         // /*
         children: [
@@ -176,8 +167,6 @@ simple_chart_config.nodeStructure = {
                 ]
             }
         ]
-
-
   //  }
 };
 */
@@ -389,44 +378,30 @@ editbtn.onclick = function() {
 
     // Get list of all names of parents
     var nodes = getParents();
+    
+    var ids = getIDs();
 
     // <form action='editnode.php'>
 
-    var contentHTML = "<div class='modal-edge-edit'> Edit a node </div> <span class='editclose'>&times;</span> <div id='addform'> <br> Node to edit: <select id='nodes-edit-id' name='children'>";
+    var contentHTML = "<div class='modal-edge-edit'> Edit a node </div> <span class='editclose'>&times;</span> <div id='addform'> <br> <form action='editnode.php' method='post'> Node to edit: <select id='nodes-edit-id' name='children'>";
 
     for (i = 0; i < nodes.length; i++) {
-        contentHTML += "<option value='" + nodes[i] + "'>" + nodes[i] + "</option> ";
+        contentHTML += "<option value='" + ids[i] + "'>" + nodes[i] + " - " + ids[i] + "</option>";
     }
 
-    contentHTML += "</select> </div> <div id='edit-options'></div>";
+    contentHTML += "</select>";
     editcontent.innerHTML = contentHTML;
-    var editDiv = document.getElementById('edit-options');
 
-    // On change, open up menu to edit for the given node
-    $('#nodes-edit-id').on('change', function() {
+    // Insert HTML fields that correspond to the thing
+    contentHTML += " <br> Full name: <input type='text' name='editfullname' id='editfullname' placeholder='Edit me...'> <br> Birthdate: <input type='date' id='editbirthdate' name='editbirthdate'> Deceased? <input type='checkbox' id='checkbox' onchange='checkboxChange(this)'> <br> <div id='editdeathdiv'> Death: <input type='date' id='editdeathdate' name='editdeathdate'> </div> <br> <input type='submit' value='Submit changes'> </form> </div>";
 
-        editDiv.style.display = "block";
-
-        // Get the selection tag
-        var selection = document.getElementById("nodes-edit-id");
-        // On selection of node, open up a field for everything!
-        var nodename = selection.value;
-        // Get the node that corresponds to the name retrieved
-        //var node = depthFirstSearch(nodename);
-
-        // Insert HTML fields that correspond to the thing
-        var editHTML = "<form action='editnode.php' method='post'> <br> Full name: <input type='text' name='editfullname' id='editfullname' placeholder='" + nodename + "'> <br> Birthdate: <input type='date' id='editbirthdate' name='editbirthdate'> Deceased? <input type='checkbox' id='checkbox' onchange='checkboxChange(this)'> <br> <div id='editdeathdiv'> Death: <input type='date' id='editdeathdate' name='editdeathdate'> </div> <br> <input type='submit' value='Submit changes'> </form>";
-
-        // Assign inner HTML
-        editDiv.innerHTML = editHTML;
-    });
+    editcontent.innerHTML = contentHTML;
+    
 
     editspan = document.getElementsByClassName('editclose')[0];
     editspan.onclick = function() {
         editmodal.style.display = "none";
     }
-
-    // editnode.php to use an update statement
 
 }
 

@@ -3,14 +3,12 @@
     // db.conf or dbconf.php
     require_once 'db.conf';
 
-    $fullname = $_POST['fullname'];
+    $fullname = $_POST['editfullname'];
+    $birthdate = $_POST['editbirthdate'];
+    $editdeathdate = $_POST['editdeathdate'];
+    $ID = $_POST['children'];
 
-    // Other data strings
-    $childOf = $_POST['parents'];
-    $birthdate = $_POST['birthdate'];
-    $deathdate = $_POST['deathdate'];   
-
-    $conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+     $conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 
     // Error handling
     if ($conn -> connect_error) {
@@ -19,10 +17,10 @@
         exit;
     }
 
-    $query = "INSERT INTO members (NAME, dob, dod, parentID) VALUES ('$fullname', '$birthdate', '$deathdate', '$childOf');";
+    $query = "UPDATE members SET NAME = '$fullname', dob = '$birthdate', dod = '$editdeathdate' WHERE id = '$ID';";
 
     if ($conn->query($query) === TRUE) {
-        echo "New record created successfully!";
+        echo "record edited successfully!";
     } else {
         echo "Error: " . $query . "<br>" . $conn->error;
     }
@@ -31,7 +29,6 @@
 
     header('Location: index.html');
     exit;
-
-    //require index.html;
+    
 
 ?>
