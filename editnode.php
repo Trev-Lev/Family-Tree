@@ -8,7 +8,7 @@
     $editdeathdate = $_POST['editdeathdate'];
     $ID = $_POST['children'];
 
-     $conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+     $conn = new mysqli($servername, $username, $password, $dbname);
 
     // Error handling
     if ($conn -> connect_error) {
@@ -29,6 +29,6 @@
 
     header('Location: index.html');
     exit;
-    
+
 
 ?>
