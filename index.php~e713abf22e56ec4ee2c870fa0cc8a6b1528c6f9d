@@ -14,12 +14,12 @@
     $loggedIn = $_SESSION['loggedin'];
 
     // To check if we are logged in later:
-    if ($_SESSION['isIn'] == true)
+    if ($_SESSION['isIn'])
         $message = "You're currently logged in as '$loggedIn.'";
     else {
         $message = "You're not logged in.";
-        header("Location: login.php");
-        exit;
+        //header("Location: login.php");
+        //exit;
     }
 ?>
 <html lang="en">

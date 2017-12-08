@@ -1,4 +1,3 @@
-
 <?php
 
     // db.conf or dbconf.php

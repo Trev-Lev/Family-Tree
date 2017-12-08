@@ -1,7 +1,7 @@
 <?php
 
     require_once 'db_credentials.php';
-    //session_start();
+    session_start();
 
     // Get username
     $username = $_POST['username'];
@@ -27,9 +27,11 @@
     if ($result->num_rows > 0) {
         echo "Login success! Redirecting...";
         $_SESSION['isIn'] = true;
-        $_SESSION['userID'] = $username;
-        sleep(2);
+        $_SESSION['username'] = $username;
+        // userid?
+        $connect->close();
         header("Location: index.php");
+        exit;
     } else {
         $_SESSION['isIn'] = false;
         echo "Error: " . $query . "<br>" . $connect->error;
@@ -39,5 +41,4 @@
 
     header('Location: index.php');
     exit;
-
 ?>

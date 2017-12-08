@@ -7,12 +7,14 @@ CREATE TABLE members(
   parentID INT default 0;
 );
 
+/*
 -- Table to model tree
 CREATE TABLE familyTree(
   childID int NOT NULL,
   parentID int NOT NULL,
   PRIMARY KEY (childID, parentID)
 );
+*/
 
 --YYYYMMDD
 INSERT INTO members VALUES (1, 'Richard Shakespeare', 14900101, 15610210, 0);
