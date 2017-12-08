@@ -1,7 +1,7 @@
 <?php
 
     // db.conf or dbconf.php
-    require_once 'db_credentials';
+    require_once 'db_credentials.php';
 
     $deleteThisID = $_POST['children'];
 

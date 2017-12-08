@@ -1,7 +1,7 @@
 <?php
 
     // db.conf or dbconf.php
-    require_once 'db.conf';
+    require_once 'db_credentials.php';
 
     $fullname = $_POST['editfullname'];
     $birthdate = $_POST['editbirthdate'];
