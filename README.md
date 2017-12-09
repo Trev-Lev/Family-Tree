@@ -10,7 +10,7 @@ This webservice allows a predefined set of users to log in and create, edit, and
 
 The three buttons to edit the tree are found at the bottom of the page - Add, remove, and edit. Add implements the "create" part of CRUD, remove implements the "delete" part of CRUD, and edit implements the "update" part of CRUD. The "read" part of CRUD is satisfied whenever a page is reloaded or whenever a user is logged in to the system.
 
-Entity Relationship Diagram (sorry about the disgusting watermark, the software linked in the requirements is dumb)
+Entity Relationship Diagram (sorry about the disgusting watermark, the software linked in the requirements adds that automatically)
 
 ![ERD](https://github.com/Trev-Lev/Family-Tree/blob/master/dev2/ERD.png "ERD Diagram")
 
@@ -31,6 +31,8 @@ Database schema:
     password VARCHAR(255) 
     );
     
+A working version of the tree can be found agt [erikbowers.epizy.com/familyTree](http://erikbowers.epizy.com/familyTree)
+
 Video demonstration:
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=Yp-Q-3MHyY0
