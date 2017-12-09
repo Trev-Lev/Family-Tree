@@ -2,6 +2,9 @@
 
     // db.conf or dbconf.php
     require_once 'db_credentials.php';
+    session_start();
+
+    $userUniqueID = $_SESSION['id1'];
 
     $fullname = $_POST['fullname'];
 
@@ -19,7 +22,7 @@
         exit;
     }
 
-    $query = "INSERT INTO members (NAME, dob, dod, parentID) VALUES ('$fullname', '$birthdate', '$deathdate', '$childOf');";
+    $query = "INSERT INTO members (NAME, dob, dod, parentID, userID) VALUES ('$fullname', '$birthdate', '$deathdate', '$childOf', $userUniqueID);";
 
     if ($conn->query($query) === TRUE) {
         echo "New record created successfully!";
