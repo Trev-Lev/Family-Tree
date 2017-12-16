@@ -38,8 +38,6 @@
     if ($result = $connect->query($query)) {
       $row=$result->fetch_array();
 			if ($result->num_rows > 0) {
-				//$row=$result->fetch_array();
-				//$result->fetch_assoc();
 				$loginID = $row['loginID'];
 				$userUniqueID = $row['id'];
 				$hashedPassword = $row['password'];
