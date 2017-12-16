@@ -26,9 +26,11 @@
         exit;
     }
 
+    $loginIDescaped = $connect->real_escape_string($userusername);
+    //$passwordescaped = $mysqli->real_escape_string($userpassword);
 //echo "test1";
     //$query = "SELECT * FROM users WHERE loginID = '$userusername' AND password = '$userpassword'";
-	$query = "SELECT * FROM users WHERE loginID = '$userusername'";
+	$query = "SELECT * FROM users WHERE loginID = '$loginIDescaped'";
 /*
     $query = $connect->prepare("SELECT * FROM users WHERE loginID = ? AND password = ?");
     $query->bind_param("ss", $userusername, $hashedPassword);
