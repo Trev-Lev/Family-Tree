@@ -22,7 +22,9 @@
         exit;
     }
 
-    $query = "INSERT INTO members (NAME, dob, dod, parentID, userID) VALUES ('$fullname', '$birthdate', '$deathdate', '$childOf', $userUniqueID);";
+    $nameEscaped = $conn->real_escape_string($fullname);
+
+    $query = "INSERT INTO members (NAME, dob, dod, parentID, userID) VALUES ('$nameEscaped', '$birthdate', '$deathdate', '$childOf', $userUniqueID);";
 
     if ($conn->query($query) === TRUE) {
         echo "New record created successfully!";

@@ -17,7 +17,9 @@
         exit;
     }
 
-    $query = "UPDATE members SET NAME = '$fullname', dob = '$birthdate', dod = '$editdeathdate' WHERE id = '$ID';";
+    $nameEscaped = $conn->real_escape_string($fullname);
+
+    $query = "UPDATE members SET NAME = '$nameEscaped', dob = '$birthdate', dod = '$editdeathdate' WHERE id = '$ID';";
 
     if ($conn->query($query) === TRUE) {
         echo "record edited successfully!";
