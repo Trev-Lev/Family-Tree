@@ -27,30 +27,33 @@
     }
 
 //echo "test1";
-    $query = "SELECT * FROM users WHERE loginID = '$userusername' AND password = '$userpassword'";
+    //$query = "SELECT * FROM users WHERE loginID = '$userusername' AND password = '$userpassword'";
+	$query = "SELECT * FROM users WHERE loginID = '$userusername'";
 /*
     $query = $connect->prepare("SELECT * FROM users WHERE loginID = ? AND password = ?");
     $query->bind_param("ss", $userusername, $hashedPassword);
 */
     //$result = $connect->query($query);
-/*
-    if ($result = $connect->query($query)) {echo "test";
+
+    if ($result = $connect->query($query)) {
+      $row=$result->fetch_array();
 			if ($result->num_rows > 0) {
+				//$row=$result->fetch_array();
 				//$result->fetch_assoc();
-				$loginID = $result['loginID'];
-				$userID = $result['id'];
-				$hashedPassword = $result['password'];
+				$loginID = $row['loginID'];
+				$userUniqueID = $row['id'];
+				$hashedPassword = $row['password'];
 
         if(password_verify($userpassword, $hashedPassword))
         {
           $_SESSION['isIn'] = true;
           $_SESSION['username'] = $loginID;
-          $_SESSION['userUniqueID'] = $userID;
+          $_SESSION['id1'] = $userUniqueID;
 
           $_SESSION['isIn'] = true;
-          connect->close)();
-          header("Location: index.php");
-          exit;
+      //    connect->close)();
+        //  header("Location: index.php");
+          //exit;
         }
         else {
           $_SESSION['isIn'] = false;
@@ -67,9 +70,8 @@
 		} else {
 			$_SESSION['isIn'] = false;
 		}
-	}
-  */
 
+/*
 $result = $connect->query($query);
 $row=$result->fetch_array();
 //$result = mysqli_query($connection, $query);
@@ -88,7 +90,7 @@ $row=$result->fetch_array();
         $_SESSION['isIn'] = false;
         // debugging
     }
-
+*/
 
     $connect->close();
     header('Location: index.php');
